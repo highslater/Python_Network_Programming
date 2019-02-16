@@ -70,7 +70,7 @@ tn.write(b"\n")
 tn.write(b"exit\n")
 tn.write(b"logout\n")
 
-#####Output Commands Entered
+#####Output: > Commands Entered
 
 print("\n\n\n*** START ***")
 print(tn.read_all().decode('ascii'))
