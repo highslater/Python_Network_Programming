@@ -41,26 +41,34 @@ tn.write(b"exec-timeout 0 0\n")
 tn.write(b"login local\n")
 tn.write(b"exit\n")
 
-#####Create 10 vlans
+#####Create 10 vlans and MANAGEMENT Vlan
 for n in range(2, 11):
 	num = str(n).encode('ascii') + b"\n"
 	tn.write(b"vlan " + num)
 	tn.write(b"name vlan__" + num)
 
+tn.write(b"vlan 99\n")
+tn.write(b"name MANAGEMENT\n")
+
 #####Configure PRODUCTION Ports
 tn.write(b"interface range e1/2 - 3, e3/1\n")
 tn.write(b"description Production Port\n")
+tn.write(b"\n")
 tn.write(b"no shutdown\n")
 
 #####Configure MANAGEMENT Ports For ROUTERS
 tn.write(b"interface range e0/0 - 3, e1/0 - 1\n")
 tn.write(b"description MANAGEMENT PORT TO ROUTER\n")
+tn.write(b"switchport mode access\n")
+tn.write(b"switchport access vlan 99\n")
 tn.write(b"shutdown\n")
 
 #####Configure MANAGEMENT Ports For SWITCHES
 tn.write(b"interface range e2/0 - 3, e3/0\n")
 tn.write(b"description MANAGEMENT PORT TO SWITCH\n")
-tn.write(b"shutdown\n")
+tn.write(b"switchport mode access\n")
+tn.write(b"switchport access vlan 99\n")
+tn.write(b"no shutdown\n")
 
 #####Shutdown ALL Unused Ports
 tn.write(b"interface range e3/2 - 3\n")
