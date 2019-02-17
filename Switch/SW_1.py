@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 
-##Switch_Default.py
+##SW_1.py
 
 import getpass
 import telnetlib
@@ -22,6 +22,7 @@ if password:
 #####Configure Default Security Settings
 
 tn.write(b"conf t\n")
+tn.write(b"no ip routing\n")
 tn.write(b"enable secret cisco\n")
 tn.write(b"username ccna privilege 15 password cisco\n")
 tn.write(b"ip domain-lookup\n")
@@ -52,14 +53,15 @@ for n in range(2, 11):
 #####Configure ALL Connected Ports
 
 tn.write(b"interface range e0/0 - 3, e1/1 - 3\n")
-tn.write(b"description MANAGEMENT PORT TO ROUTER\n")
+#tn.write(b"description MANAGEMENT PORT TO ROUTER\n")
 tn.write(b"no shutdown\n")
 
 #####Shutdown ALL Unused Ports
 
 tn.write(b"interface range e2/0 - 3, e3/0 - 3\n")
-tn.write(b"description SHUTDOWN as Security Best Practice\n")
-tn.write(b"shutdown\n")
+#tn.write(b"description SHUTDOWN as Security Best Practice\n")
+#tn.write(b"shutdown\n")
+tn.write(b"no shutdown\n")
 
 #####Exit, Copy Configuration, and LOGOUT
 
