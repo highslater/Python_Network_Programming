@@ -51,18 +51,54 @@ for n in range(2, 11):
 	tn.write(b"vlan " + num)
 	tn.write(b"name vlan__" + num)
 
-#####Configure ALL Connected Ports
+tn.write(b"vlan 99\n")
+tn.write(b"name MANAGEMENT\n")
 
-tn.write(b"interface range e0/0 - 3, e1/1 - 3\n")
-#tn.write(b"description MANAGEMENT PORT TO ROUTER\n")
+#####Configure MANAGEMENT Ports
+
+tn.write(b"interface e0/0\n")
+tn.write(b"description MANAGEMENT PORT TO SW_1\n")
+tn.write(b"switchport mode access\n")
+tn.write(b"switchport access vlan 99\n")
 tn.write(b"no shutdown\n")
+
+#####Configure ALL Connected Ports
+tn.write(b"interface e0/1\n")
+tn.write(b"description PRODUCTION  TRUNK TO SW_3\n")
+tn.write(b"switchport mode access\n")
+tn.write(b"switchport access vlan 1\n")
+tn.write(b"no shutdown\n")
+
+tn.write(b"interface e0/2\n")
+tn.write(b"description PRODUCTION  TRUNK TO SW_3\n")
+tn.write(b"switchport mode access\n")
+tn.write(b"switchport access vlan 1\n")
+tn.write(b"no shutdown\n")
+
+tn.write(b"interface e0/3\n")
+tn.write(b"description PRODUCTION  TRUNK TO SW_4\n")
+tn.write(b"switchport mode access\n")
+tn.write(b"switchport access vlan 1\n")
+tn.write(b"no shutdown\n")
+
+tn.write(b"interface e1/0\n")
+tn.write(b"description PRODUCTION  TRUNK TO SW_5\n")
+tn.write(b"switchport mode access\n")
+tn.write(b"switchport access vlan 1\n")
+tn.write(b"no shutdown\n")
+
+tn.write(b"interface e1/1\n")
+tn.write(b"description PRODUCTION  TRUNK TO SW_6\n")
+tn.write(b"switchport mode access\n")
+tn.write(b"switchport access vlan 1\n")
+tn.write(b"no shutdown\n")
+
 
 #####Shutdown ALL Unused Ports
 
-tn.write(b"interface range e2/0 - 3, e3/0 - 3\n")
-#tn.write(b"description SHUTDOWN as Security Best Practice\n")
-#tn.write(b"shutdown\n")
-tn.write(b"no shutdown\n")
+tn.write(b"interface range e1/2 - 3, e2/0 - 3, e3/0 - 3\n")
+tn.write(b"description SHUTDOWN as Security Best Practice\n")
+tn.write(b"shutdown\n")
 
 #####Exit, Copy Configuration, and LOGOUT
 
