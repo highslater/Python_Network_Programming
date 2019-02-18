@@ -88,6 +88,19 @@ tn.write(b"interface range e1/1 - 3, e2/0 - 3, e3/0 - 3\n")
 tn.write(b"description SHUTDOWN as Security Best Practice\n")
 tn.write(b"shutdown\n")
 
+#####Configure MANAGEMENT VLAN 99
+tn.write(b"interface vlan 99\n")
+tn.write(b"description MANAGEMENT VLAN 99\n")
+tn.write(b"ip address 192.168.122.152 255.255.255.0\n")
+tn.write(b"no shutdown\n")
+
+#####Shutdown and SECURE vlan 1
+tn.write(b"interface vlan 1\n")
+tn.write(b"description SHUTDOWN as Security Best Practice\n")
+tn.write(b"no ip address\n")
+tn.write(b"shutdown\n")
+
+
 #####Exit, Copy Configuration, and LOGOUT
 
 tn.write(b"exit\n")
