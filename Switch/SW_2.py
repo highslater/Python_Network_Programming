@@ -88,11 +88,22 @@ tn.write(b"switchport mode access\n")
 tn.write(b"switchport access vlan 1\n")
 tn.write(b"no shutdown\n")
 
-
 #####Shutdown ALL Unused Ports
 
 tn.write(b"interface range e1/2 - 3, e2/0 - 3, e3/0 - 3\n")
 tn.write(b"description SHUTDOWN as Security Best Practice\n")
+tn.write(b"shutdown\n")
+
+#####Configure VLAN 99
+tn.write(b"interface vlan 99\n")
+tn.write(b"description MANAGEMENT VLAN 99\n")
+tn.write(b"ip address 192.168.122.151 255.255.255.0\n")
+tn.write(b"no shutdown\n")
+
+#####Shutdown and SECURE vlan 1
+tn.write(b"interface vlan 1\n")
+tn.write(b"description SHUTDOWN an Security Best Practice\n")
+tn.write(b"no ip address\n")
 tn.write(b"shutdown\n")
 
 #####Exit, Copy Configuration, and LOGOUT
