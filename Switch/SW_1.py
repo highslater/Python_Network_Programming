@@ -55,7 +55,7 @@ tn.write(b"interface range e0/0 - 3, e1/0 - 1\n")
 tn.write(b"description MANAGEMENT PORT TO ROUTER\n")
 tn.write(b"switchport mode access\n")
 tn.write(b"switchport access vlan 99\n")
-tn.write(b"shutdown\n")
+tn.write(b"no shutdown\n")
 
 #####Configure MANAGEMENT Ports For SWITCHES
 tn.write(b"interface range e2/0 - 3, e3/0\n")
@@ -82,6 +82,18 @@ tn.write(b"no shutdown\n")
 
 #####Shutdown ALL Unused Ports
 tn.write(b"interface range e3/2 - 3\n")
+tn.write(b"description SHUTDOWN as Security Best Practice\n")
+tn.write(b"shutdown\n")
+
+#####Configure VLAN 99
+tn.write(b"interface vlan 99\n")
+tn.write(b"ip address 192.168.122.150 255.255.255.0\n")
+tn.write(b"description MANGEMENT VLAN 99\n")
+tn.write(b"no shutdown\n")
+
+#####Shutown and SECURE vlan 1
+tn.write(b"interface vlan 1\n")
+tn.write(b"no ip address\n")
 tn.write(b"description SHUTDOWN as Security Best Practice\n")
 tn.write(b"shutdown\n")
 
