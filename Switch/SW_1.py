@@ -65,8 +65,18 @@ tn.write(b"switchport access vlan 99\n")
 tn.write(b"no shutdown\n")
 
 #####Configure PRODUCTION Ports
-tn.write(b"interface range e1/2 - 3, e3/1\n")
-tn.write(b"description Production Port\n")
+tn.write(b"interface range e1/2\n")
+tn.write(b"description PRODUCTION PORT to UB-1\n")
+tn.write(b"\n")
+tn.write(b"no shutdown\n")
+
+tn.write(b"interface range e1/3\n")
+tn.write(b"description PRODUCTION PORT to NAT-1\n")
+tn.write(b"\n")
+tn.write(b"no shutdown\n")
+
+tn.write(b"interface range e3/1\n")
+tn.write(b"description PRODUCTION PORT to SW6\n")
 tn.write(b"\n")
 tn.write(b"no shutdown\n")
 

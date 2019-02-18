@@ -63,16 +63,11 @@ tn.write(b"switchport access vlan 99\n")
 tn.write(b"no shutdown\n")
 
 #####Configure ALL Connected Ports
-tn.write(b"interface e0/1\n")
+tn.write(b"interface range e0/1 - 2\n")
 tn.write(b"description PRODUCTION  TRUNK TO SW_3\n")
-tn.write(b"switchport mode access\n")
-tn.write(b"switchport access vlan 1\n")
-tn.write(b"no shutdown\n")
-
-tn.write(b"interface e0/2\n")
-tn.write(b"description PRODUCTION  TRUNK TO SW_3\n")
-tn.write(b"switchport mode access\n")
-tn.write(b"switchport access vlan 1\n")
+tn.write(b"switchport trunk encapsulation dot1q\n")
+tn.write(b"switchport mode trunk\n")
+tn.write(b"switchport trunk native vlan 99\n")
 tn.write(b"no shutdown\n")
 
 tn.write(b"interface e0/3\n")
