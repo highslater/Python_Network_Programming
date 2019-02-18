@@ -24,7 +24,7 @@ if password:
 tn.write(b"conf t\n")
 tn.write(b"no ip routing\n")
 tn.write(b"enable secret cisco\n")
-tn.write(b"username ccna privilege 15 password cisco\n")
+tn.write(b"username S3ccna privilege 15 password S3cisco\n")
 tn.write(b"ip domain-lookup\n")
 tn.write(b"ip name-server 192.168.122.1\n")
 tn.write(b"http server\n")
