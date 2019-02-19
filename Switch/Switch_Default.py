@@ -7,7 +7,6 @@ import getpass
 import telnetlib
 
 #####Enter LOGIN Credentials
-
 HOST = input("Enter HOST ADDRESS: ")
 user = input("Enter your remote account: ")
 password = getpass.getpass()
@@ -20,13 +19,14 @@ if password:
     tn.write(password.encode('ascii') + b"\n")
 
 #####Configure Default Security Settings
-
 tn.write(b"conf t\n")
+tn.write(b"hostname Default_SW\n")
+tn.write(b"no ip routing\n")
 tn.write(b"enable secret cisco\n")
 tn.write(b"username ccna privilege 15 password cisco\n")
 tn.write(b"ip domain-lookup\n")
 tn.write(b"ip name-server 192.168.122.1\n")
-tn.write(b"http server\n")
+tn.write(b"ip http server\n")
 tn.write(b"ip domain-name gns3.com\n")
 tn.write(b"line console 0\n")
 tn.write(b"logging synchronous\n")
@@ -42,27 +42,61 @@ tn.write(b"exec-timeout 0 0\n")
 tn.write(b"login local\n")
 tn.write(b"exit\n")
 
-#####Create 10 vlans
-
+#####Create 10 vlans and MANAGEMENT Vlan
 for n in range(2, 11):
 	num = str(n).encode('ascii') + b"\n"
 	tn.write(b"vlan " + num)
 	tn.write(b"name vlan__" + num)
 
-#####Configure ALL Connected Ports
+tn.write(b"vlan 99\n")
+tn.write(b"name MANAGEMENT\n")
 
-tn.write(b"interface range e0/0 - 3, e1/1 - 3\n")
-tn.write(b"description MANAGEMENT PORT TO ROUTER\n")
+#####Configure MANAGEMENT Ports For ROUTERS
+#tn.write(b"interface range e0/0 - 3, e1/0 - 1\n")
+#tn.write(b"description MANAGEMENT PORT TO ROUTER\n")
+#tn.write(b"switchport mode access\n")
+#tn.write(b"switchport access vlan 99\n")
+#tn.write(b"no shutdown\n")
+
+tn.write(b"interface e0/0\n")
+tn.write(b"description MANAGEMENT PORT VLAN 99\n")
+tn.write(b"switchport mode access\n")
+tn.write(b"switchport access vlan 99\n")
 tn.write(b"no shutdown\n")
 
-#####Shutdown ALL Unused Ports
+#####Configure PRODUCTION Ports
+#tn.write(b"interface range e1/2\n")
+#tn.write(b"description PRODUCTION PORT to UB-1\n")
+#tn.write(b"\n")
+#tn.write(b"no shutdown\n")
 
-tn.write(b"interface range e2/0 - 3, e3/0 - 3\n")
+#tn.write(b"interface range e1/3\n")
+#tn.write(b"description PRODUCTION PORT to NAT-1\n")
+#tn.write(b"\n")
+#tn.write(b"no shutdown\n")
+
+#tn.write(b"interface range e3/1\n")
+#tn.write(b"description PRODUCTION PORT to SW6\n")
+#tn.write(b"\n")
+
+#####Shutdown ALL Unused Ports
+tn.write(b"interface range e0/1 - 3, e1/0 - 3, e2/0 - 3,e3/0 - 3\n")
+tn.write(b"description SHUTDOWN as Security Best Practice\n")
+tn.write(b"shutdown\n")
+
+#####Configure VLAN 99
+tn.write(b"interface vlan 99\n")
+tn.write(b"ip address 192.168.122.156 255.255.255.0\n")
+tn.write(b"description MANGEMENT VLAN 99\n")
+tn.write(b"no shutdown\n")
+
+#####Shutown and SECURE vlan 1
+tn.write(b"interface vlan 1\n")
+tn.write(b"no ip address\n")
 tn.write(b"description SHUTDOWN as Security Best Practice\n")
 tn.write(b"shutdown\n")
 
 #####Exit, Copy Configuration, and LOGOUT
-
 tn.write(b"exit\n")
 tn.write(b"exit\n")
 tn.write(b"cop r s\n")
@@ -71,7 +105,6 @@ tn.write(b"exit\n")
 tn.write(b"logout\n")
 
 #####Output: >>>>> Commands Entered
-
 print("\n\n\n*** START ***")
 print(tn.read_all().decode('ascii'))
 print("*** COMPLETE ***\n\n\n")

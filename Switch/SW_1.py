@@ -82,8 +82,10 @@ tn.write(b"no shutdown\n")
 
 #####Shutdown ALL Unused Ports
 tn.write(b"interface range e3/2 - 3\n")
-tn.write(b"description SHUTDOWN as Security Best Practice\n")
-tn.write(b"shutdown\n")
+tn.write(b"description DEFAULT ROUTER AND SWITCH\n")
+tn.write(b"switchport mode access\n")
+tn.write(b"switchport access vlan 99\n")
+tn.write(b"no shutdown\n")
 
 #####Configure VLAN 99
 tn.write(b"interface vlan 99\n")

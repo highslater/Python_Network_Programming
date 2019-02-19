@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 ##Router_Default
 
 
@@ -21,16 +23,8 @@ tn.write(b"enable secret cisco\n")
 tn.write(b"username ccna privilege 15 password cisco\n")
 tn.write(b"ip domain-lookup\n")
 tn.write(b"ip name-server 192.168.122.1\n")
-tn.write(b"http server\n")
+tn.write(b"ip http server\n")
 tn.write(b"ip domain-name gns3.com\n")
-
-
-#tn.write(b"crypto key zeroize\n")
-#tn.read_until(b"[yes/no]: ")
-#tn.write(b"yes\n")
-#tn.write(b"crypto key generate rsa modulus 2056\n")
-#tn.write(b"ip ssh version 2\n")
-
 tn.write(b"line console 0\n")
 tn.write(b"logging synchronous\n")
 tn.write(b"exec-timeout 0 0\n")
